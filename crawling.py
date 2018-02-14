@@ -15,7 +15,7 @@ cinema_texts = soup.select('a')
 cinema_list = []
 
 for a in cinema_texts:
-	cinema_list.append(a.text)
+    cinema_list.append(a.text)
 
 # print(cinema_list)
 
@@ -41,32 +41,29 @@ final_str = ''
 
 # print(len(cinema_list)-1)
 
-for i in cinema_list :
-	# print(i)
-	if '관람가' in i :
-		num = i.find('관람가')
-		final_list.append('\n')
-		final_list.append('*' + i[num+3:] + '*' + ':point_right:')
-	else:
-		num = i.find('~')
-		final_list.append(i[:num+6])
-		final_list.append('/') # 시간 정표를 final_list에 추가하고, '/' 를 리스트에 추가해줌
+for i in cinema_list:
+    # print(i)
+    if '관람가' in i:
+        num = i.find('관람가')
+        final_list.append('\n')
+        final_list.append('*' + i[num + 3:] + '*' + ':point_right:')
+    else:
+        num = i.find('~')
+        final_list.append(i[:num + 6])
+        final_list.append('/')  # 시간 정표를 final_list에 추가하고, '/' 를 리스트에 추가해줌
 
-final_list.append('') #마지막 슬래쉬를 판별하기위한 공백 리스트
+final_list.append('')  # 마지막 슬래쉬를 판별하기위한 공백 리스트
 
+del final_list[0]  # 맨앞의 계행 문자를 제거
 
-del final_list[0] # 맨앞의 계행 문자를 제거
+for i in range(0, len(final_list) - 1):
+    if final_list[i + 1] == '':  # 리스트의 맨끝이 ''이면 /를 제거
+        final_list[i] = ''
+    elif '\n' in final_list[i + 1]:  # 리스트의 다음문자가 계행 문자면 /를 제거
+        final_list[i] = ''
 
-
-for i in range(0, len(final_list)-1):
-	if final_list[i+1] == '' : #리스트의 맨끝이 ''이면 /를 제거
-		final_list[i] = ''
-	elif '\n' in final_list[i+1]: #리스트의 다음문자가 계행 문자면 /를 제거
-		final_list[i] = ''
-
-
-for i in final_list: # 리스트를 문자열로 변환 및 띄어쓰기 추가
-	final_str += str(i) + ' '
+for i in final_list:  # 리스트를 문자열로 변환 및 띄어쓰기 추가
+    final_str += str(i) + ' '
 
 
 def on_message(ws, message):
@@ -82,7 +79,7 @@ def on_message(ws, message):
         ws.send(json.dumps(return_msg))
 
 
-token = 'xoxb-314380206166-YkkPLCluq4jX7Af363ekkwmJ'
+token = ''
 get_url = requests.get('https://slack.com/api/rtm.connect?token=' + token)
 print(get_url.json()['url'])
 socket_endpoint = get_url.json()['url']
