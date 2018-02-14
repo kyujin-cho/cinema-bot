@@ -7,9 +7,6 @@ verify_ssl = true
 
 websockets = "*"
 websocket-client = "*"
-json = "*"
-BeautifulSoup = "*"
-os = "*"
 
 
 [requires]
