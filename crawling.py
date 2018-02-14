@@ -1,6 +1,7 @@
 import json
 import websocket
 import requests
+import os
 from bs4 import BeautifulSoup
 
 data = {'cinemaCode1': '4253', 'mBookingType': '2'}
@@ -79,7 +80,8 @@ def on_message(ws, message):
         ws.send(json.dumps(return_msg))
 
 
-token = ''
+#heroku용 토큰
+token = os.environ.get('SLACK_BOT_TOKEN')
 get_url = requests.get('https://slack.com/api/rtm.connect?token=' + token)
 print(get_url.json()['url'])
 socket_endpoint = get_url.json()['url']
