@@ -78,15 +78,3 @@ def on_message(ws, message):
             'text': final_str  # 위에서 설정한 버스 시간표 텍스트
         }
         ws.send(json.dumps(return_msg))
-
-
-#heroku용 토큰
-token = os.environ.get('SLACK_BOT_TOKEN')
-get_url = requests.get('https://slack.com/api/rtm.connect?token=' + token)
-print(get_url.json()['url'])
-socket_endpoint = get_url.json()['url']
-print('Connecting to', socket_endpoint)
-
-websocket.enableTrace(True)
-ws = websocket.WebSocketApp(socket_endpoint, on_message=on_message)
-ws.run_forever()
